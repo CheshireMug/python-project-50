@@ -1,4 +1,5 @@
 import argparse
+from gendiff.scripts.file_parser import read_files
 
 
 def main():
@@ -11,7 +12,12 @@ files and shows a difference.')
         '-f', '--format',
         help='set format of output'
     )
-    return parser.parse_args()
+    args = parser.parse_args()
+    first_file = args.first_file
+    second_file = args.second_file
+    data = read_files(first_file, second_file)
+    print(data)
+    return
 
 
 if __name__ == "__main__":
