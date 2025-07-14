@@ -2,6 +2,12 @@ import argparse
 from gendiff.scripts.file_parser import read_files
 
 
+def validate_value(value):
+  if isinstance(value, bool):
+      return "true" if value else "false"
+  return value
+
+
 def generate_diff(first_file, second_file):
     compared_data = []
     first_file_data = first_file
@@ -37,18 +43,18 @@ def generate_diff(first_file, second_file):
         for sideEl in el:
             if el[sideEl]['status'] == 'removed':
                 result_report += \
-                f'  - {sideEl}: {el[sideEl]['old_value']}\n'
+              f'  - {sideEl}: {validate_value(el[sideEl]['old_value'])}\n'
             if el[sideEl]['status'] == 'unchanged':
                 result_report += \
-                f'    {sideEl}: {el[sideEl]['new_value']}\n'
+                f'    {sideEl}: {validate_value(el[sideEl]['new_value'])}\n'
             if el[sideEl]['status'] == 'changed':
                 result_report += \
-                f'  - {sideEl}: {el[sideEl]['old_value']}\n'
+                f'  - {sideEl}: {validate_value(el[sideEl]['old_value'])}\n'
                 result_report += \
-                f'  + {sideEl}: {el[sideEl]['new_value']}\n'
+                f'  + {sideEl}: {validate_value(el[sideEl]['new_value'])}\n'
             if el[sideEl]['status'] == 'added':
                 result_report += \
-                f'  + {sideEl}: {el[sideEl]['new_value']}\n'
+                f'  + {sideEl}: {validate_value(el[sideEl]['new_value'])}\n'
     result_report += '}'
     return result_report
         

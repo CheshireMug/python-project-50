@@ -9,8 +9,7 @@ answer = '''{
   - timeout: 50
   + timeout: 20
   + verbose: true
-}
-'''
+}'''
 
 
 def test_gendiff():
