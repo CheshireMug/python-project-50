@@ -1,11 +1,12 @@
 import argparse
+
 from gendiff.scripts.file_parser import read_files
 
 
 def validate_value(value):
-  if isinstance(value, bool):
-      return "true" if value else "false"
-  return value
+    if isinstance(value, bool):
+        return "true" if value else "false"
+    return value
 
 
 def generate_diff(first_file, second_file):
@@ -36,7 +37,7 @@ def generate_diff(first_file, second_file):
             new_el['status'] = 'removed'
             new_el['old_value'] = first_file_data[el1]
             compared_data.append({el1: new_el})
-    compared_data = sorted(compared_data,\
+    compared_data = sorted(compared_data,
                             key=lambda x: sorted(x.keys())[0] if x else '')
     result_report = '{\n'
     for el in compared_data:
