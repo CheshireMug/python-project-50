@@ -1,6 +1,7 @@
 import argparse
 
 from gendiff.scripts.file_parser import read_files
+from gendiff.scripts.yaml_parser import read_yaml
 
 
 def validate_value(value):
@@ -73,7 +74,11 @@ files and shows a difference.')
     args = parser.parse_args()
     first_file = args.first_file
     second_file = args.second_file
+    # if first_file[-5:] == '.json' and second_file[-5:] == '.json':
     data = read_files(first_file, second_file)
+    # elif first_file[-4:] == '.yml' and second_file[-4:] == '.yml' \
+    # or first_file[-5:] == '.yaml' and second_file[-5:] == '.yaml':
+    #     data = read_yaml(first_file, second_file)
     compared_files = generate_diff(data[0], data[1])
     print(compared_files)
     return
