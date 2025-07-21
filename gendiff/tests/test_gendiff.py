@@ -1,4 +1,5 @@
 from gendiff.scripts.file_parser import read_files
+from gendiff.scripts.yaml_parser import read_yaml
 from gendiff.scripts.gendiff import generate_diff
 
 answer = '''{
@@ -23,5 +24,5 @@ def test_yaml():
     first_file = 'gendiff/tests/test_data/file1.yml'
     second_file = 'gendiff/tests/test_data/file2.yml'
     data = read_yaml(first_file, second_file)
-    compared_files = compare_yaml(data[0], data[1])
+    compared_files = generate_diff(data[0], data[1])
     assert compared_files == answer
