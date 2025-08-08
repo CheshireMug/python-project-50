@@ -14,7 +14,7 @@ flat_answer = '''{
 requirseve_answer = '''{
     common: {
       + follow: false
-        setting1: Value
+        setting1: Value 1
       - setting2: 200
       - setting3: true
       + setting3: null
@@ -53,7 +53,7 @@ requirseve_answer = '''{
             }
         }
         fee: 100500
-    }  
+    }
 }'''
 
 

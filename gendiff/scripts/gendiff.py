@@ -113,27 +113,8 @@ def generate_diff(first_file, second_file, format_name='stylish'):
     if format_name == 'stylish':
         result = create_stylish_string(compared_data)
     return result
-    # result_report = '{\n'
-    # for el in compared_data:
-    #     for sideEl in el:
-    #         if el[sideEl]['status'] == 'removed':
-    #             result_report += \
-    #           f'  - {sideEl}: {validate_value(el[sideEl]['old_value'])}\n'
-    #         if el[sideEl]['status'] == 'unchanged':
-    #             result_report += \
-    #             f'    {sideEl}: {validate_value(el[sideEl]['new_value'])}\n'
-    #         if el[sideEl]['status'] == 'changed':
-    #             result_report += \
-    #             f'  - {sideEl}: {validate_value(el[sideEl]['old_value'])}\n'
-    #             result_report += \
-    #             f'  + {sideEl}: {validate_value(el[sideEl]['new_value'])}\n'
-    #         if el[sideEl]['status'] == 'added':
-    #             result_report += \
-    #             f'  + {sideEl}: {validate_value(el[sideEl]['new_value'])}\n'
-    # result_report += '}'
-    # return result_report
-        
-        
+
+
 def main():
     parser = argparse.ArgumentParser(prog='gendiff',
                     description='Compares two configuration\
