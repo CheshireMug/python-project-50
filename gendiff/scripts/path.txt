@@ -1,2 +1,0 @@
-file1_path = 'gendiff/test_data/file1.yml'
-file2_path = 'gendiff/test_data/file2.yml'

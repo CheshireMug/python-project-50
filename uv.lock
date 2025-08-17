@@ -64,6 +64,11 @@ dependencies = [
     { name = "ruff" },
 ]
 
+[package.dev-dependencies]
+dev = [
+    { name = "pytest-cov" },
+]
+
 [package.metadata]
 requires-dist = [
     { name = "coverage", specifier = ">=7.9.2" },
@@ -71,6 +76,9 @@ requires-dist = [
     { name = "pyyaml", specifier = ">=6.0.2" },
     { name = "ruff", specifier = ">=0.12.1" },
 ]
+
+[package.metadata.requires-dev]
+dev = [{ name = "pytest-cov", specifier = ">=6.2.1" }]
 
 [[package]]
 name = "iniconfig"
