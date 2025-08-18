@@ -13,6 +13,9 @@ https://asciinema.org/a/7wfUM3IMEhKD2PYQimKnnUUdB
 ## plain_compare_requirseve_files asciinema
 https://asciinema.org/a/e5SLcwHmnTlns3ewzefWlVd8h
 
+## json_compare_requirseve_files asciinema
+https://asciinema.org/a/NoipTsy7A2QxAyf1w7WrNn8up
+
 ### Sonar Cube
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=CheshireMug_python-project-50&metric=coverage)](https://sonarcloud.io/summary/new_code?id=CheshireMug_python-project-50)
 

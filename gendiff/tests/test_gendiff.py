@@ -71,6 +71,9 @@ Property 'group2' was removed
 Property 'group3' was added with value: [complex value]'''
 
 
+json_answer = '''{"common": {"status": "nested", "new_value": {"follow": {"status": "added", "new_value": false}, "setting1": {"status": "unchanged", "old_value": "Value 1", "new_value": "Value 1"}, "setting3": {"status": "changed", "old_value": true, "new_value": null}, "setting4": {"status": "added", "new_value": "blah blah"}, "setting5": {"status": "added", "new_value": {"key5": "value5"}}, "setting6": {"status": "nested", "new_value": {"key": {"status": "unchanged", "old_value": "value", "new_value": "value"}, "ops": {"status": "added", "new_value": "vops"}, "doge": {"status": "nested", "new_value": {"wow": {"status": "changed", "old_value": "", "new_value": "so much"}}}}}, "setting2": {"status": "removed", "old_value": 200}}}, "group1": {"status": "nested", "new_value": {"foo": {"status": "unchanged", "old_value": "bar", "new_value": "bar"}, "baz": {"status": "changed", "old_value": "bas", "new_value": "bars"}, "nest": {"status": "changed", "old_value": {"key": "value"}, "new_value": "str"}}}, "group3": {"status": "added", "new_value": {"deep": {"id": {"number": 45}}, "fee": 100500}}, "group2": {"status": "removed", "old_value": {"abc": 12345, "deep": {"id": 45}}}}'''
+
+
 # Для путей использовать библиотеку pathlib либо os.path.join
 def test_flat_gendiff():
     first_file = 'gendiff/tests/test_data/flat/file1.json'
@@ -118,3 +121,19 @@ def test_plain_yaml():
     data = read_yaml(first_file, second_file)
     compared_files = generate_diff(data[0], data[1], 'plain')
     assert compared_files == plain_answer
+
+
+def test_json_formater_json():
+    first_file = 'gendiff/tests/test_data/requirseve/file1.json'
+    second_file = 'gendiff/tests/test_data/requirseve/file2.json'
+    data = read_files(first_file, second_file)
+    compared_files = generate_diff(data[0], data[1], 'json')
+    assert compared_files == json_answer
+
+
+def test_json_formater_yaml():
+    first_file = 'gendiff/tests/test_data/requirseve/file1.yml'
+    second_file = 'gendiff/tests/test_data/requirseve/file2.yml'
+    data = read_yaml(first_file, second_file)
+    compared_files = generate_diff(data[0], data[1], 'json')
+    assert compared_files == json_answer
