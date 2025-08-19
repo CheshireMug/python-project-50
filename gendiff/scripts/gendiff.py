@@ -1,10 +1,10 @@
 import argparse
 
+from gendiff.formaters.json_formater import create_json_string
+from gendiff.formaters.plain import create_plain_string
+from gendiff.formaters.stylish import create_stylish_string
 from gendiff.scripts.file_parser import read_files
 from gendiff.scripts.yaml_parser import read_yaml
-from gendiff.formaters.stylish import create_stylish_string
-from gendiff.formaters.plain import create_plain_string
-from gendiff.formaters.json_formater import create_json_string
 
 
 # Разбить на фукции поменьше
