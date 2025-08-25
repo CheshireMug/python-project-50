@@ -2,8 +2,8 @@ import os
 
 import pytest
 
-from gendiff.scripts.file_parser import read_files
 from gendiff.gendiff import generate_diff
+from gendiff.scripts.file_parser import read_files
 from gendiff.scripts.yaml_parser import read_yaml
 
 
