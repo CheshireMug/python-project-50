@@ -1,4 +1,4 @@
-from gendiff.formaters.validation import validate_value
+from gendiff.formatters.validation import validate_value
 
 
 def create_dict(dictionary, indent=0):
