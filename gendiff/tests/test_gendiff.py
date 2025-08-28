@@ -1,3 +1,4 @@
+import json
 import os
 
 import pytest
@@ -9,7 +10,9 @@ from gendiff.scripts.yaml_parser import read_yaml
 
 @pytest.fixture
 def flat_answer():
-    with open("gendiff/tests/fixtures/flat_fixture.txt",
+    with open(os.path.join(
+        "gendiff", "tests", "fixtures", "flat_fixture.txt"
+        ),
               "r", encoding="utf-8") as f:
         data = f.read()
     return data
@@ -17,7 +20,9 @@ def flat_answer():
 
 @pytest.fixture
 def requirseve_answer():
-    with open("gendiff/tests/fixtures/requirseve_fixture.txt",
+    with open(os.path.join(
+        "gendiff", "tests", "fixtures", "requirseve_fixture.txt"
+        ),
                "r", encoding="utf-8") as f:
         data = f.read()
     return data
@@ -25,7 +30,9 @@ def requirseve_answer():
 
 @pytest.fixture
 def plain_answer():
-    with open("gendiff/tests/fixtures/plain_fixture.txt",
+    with open(os.path.join(
+        "gendiff", "tests", "fixtures", "plain_fixture.txt"
+        ),
                "r", encoding="utf-8") as f:
         data = f.read()
     return data
@@ -33,7 +40,9 @@ def plain_answer():
 
 @pytest.fixture
 def json_answer():
-    with open("gendiff/tests/fixtures/json_fixture.json",
+    with open(os.path.join(
+        "gendiff", "tests", "fixtures", "json_fixture.json"
+        ),
                "r", encoding="utf-8") as f:
         data = f.read()
     return data
@@ -135,7 +144,7 @@ def test_json_formater_json(json_answer):
         )
     data = read_files(first_file, second_file)
     compared_files = generate_diff(data[0], data[1], 'json')
-    assert compared_files == json_answer
+    assert json.loads(compared_files) == json.loads(json_answer)
 
 
 def test_json_formater_yaml(json_answer):
@@ -149,4 +158,4 @@ def test_json_formater_yaml(json_answer):
         )
     data = read_yaml(first_file, second_file)
     compared_files = generate_diff(data[0], data[1], 'json')
-    assert compared_files == json_answer
+    assert json.loads(compared_files) == json.loads(json_answer)

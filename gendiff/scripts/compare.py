@@ -1,39 +1,34 @@
 # Разбить на фукции поменьше
 def compare_files(first_file, second_file):
     compared_data = {}
-    for el2 in second_file.keys():
-        new_el = {}
-        if isinstance(second_file[el2], dict) and \
-        el2 in first_file.keys() and \
-        second_file[el2] != first_file[el2]:
-            new_el['status'] = 'nested'
-            new_el['new_value'] = compare_files(
-                first_file[el2], second_file[el2]
-                )
-            compared_data[el2] = new_el
-        if el2 not in first_file.keys():
-            new_el['status'] = 'added'
-            new_el['new_value'] = second_file[el2]
-            compared_data[el2] = new_el
-        if el2 in first_file.keys() and\
-        second_file[el2] == first_file[el2]:
-            new_el['status'] = 'unchanged'
-            new_el['old_value'] = first_file[el2]
-            new_el['new_value'] = second_file[el2]
-            compared_data[el2] = new_el
-        if not isinstance(second_file[el2], dict) and \
-        el2 in first_file.keys() and \
-        second_file[el2] != first_file[el2]:
-            new_el['status'] = 'changed'
-            new_el['old_value'] = first_file[el2]
-            new_el['new_value'] = second_file[el2]
-            compared_data[el2] = new_el
+    all_keys = sorted(set(first_file.keys()) | set(second_file.keys()))
 
-    for el1 in first_file.keys():
+    for key in all_keys:
         new_el = {}
-        if el1 not in second_file.keys():
+
+        if key in first_file and key in second_file:
+            if isinstance(first_file[key], dict) and isinstance(
+                second_file[key], dict
+                ):
+                new_el['status'] = 'nested'
+                new_el['new_value'] = compare_files(
+                    first_file[key], second_file[key]
+                    )
+            elif first_file[key] == second_file[key]:
+                new_el['status'] = 'unchanged'
+                new_el['old_value'] = first_file[key]
+                new_el['new_value'] = second_file[key]
+            else:
+                new_el['status'] = 'changed'
+                new_el['old_value'] = first_file[key]
+                new_el['new_value'] = second_file[key]
+        elif key in first_file:
             new_el['status'] = 'removed'
-            new_el['old_value'] = first_file[el1]
-            compared_data[el1] = new_el
+            new_el['old_value'] = first_file[key]
+        else:  # key in second_file
+            new_el['status'] = 'added'
+            new_el['new_value'] = second_file[key]
+
+        compared_data[key] = new_el
 
     return compared_data
