@@ -15,6 +15,50 @@ def create_dict(dictionary, indent=0):
     return result_string
 
 
+def stylish_string_conditions(
+          result_report, status, new_value, old_value,
+          indent_str, indent, el
+          ):
+    if status == 'nested':
+        nested_str = create_stylish_string(new_value, indent + 1)
+        result_report += f'{indent_str}    {el}: {nested_str}\n'
+    if status == 'removed':
+        if isinstance(old_value, dict):
+            dict_str = create_dict(old_value, indent + 1)
+            result_report += f'{indent_str}  - {el}: {dict_str}\n'
+        else:
+            result_report += \
+                f'{indent_str}  - {el}: {validate_value(old_value)}\n'
+    if status == 'unchanged':
+        if isinstance(new_value, dict):
+            dict_str = create_dict(new_value, indent + 1)
+            result_report += f'{indent_str}    {el}: {dict_str}\n'
+        else:
+            result_report += \
+                f'{indent_str}    {el}: {validate_value(new_value)}\n'
+    if status == 'changed':
+        if isinstance(old_value, dict):
+            dict_str = create_dict(old_value, indent + 1)
+            result_report += f'{indent_str}  - {el}: {dict_str}\n'
+        else:
+            result_report += \
+                f'{indent_str}  - {el}: {validate_value(old_value)}\n'
+        if isinstance(new_value, dict):
+            dict_str = create_dict(new_value, indent + 1)
+            result_report += f'{indent_str}  + {el}: {dict_str}\n'
+        else:
+            result_report += \
+                f'{indent_str}  + {el}: {validate_value(new_value)}\n'
+    if status == 'added':
+        if isinstance(new_value, dict):
+            dict_str = create_dict(new_value, indent + 1)
+            result_report += f'{indent_str}  + {el}: {dict_str}\n'
+        else:
+            result_report += \
+                f'{indent_str}  + {el}: {validate_value(new_value)}\n'
+    return result_report
+
+
 def stylish_string_cycle(
         result_report, sorted_keys, compared_data, indent_str, indent
         ):
@@ -22,43 +66,10 @@ def stylish_string_cycle(
         status = compared_data[el]['status']
         old_value = compared_data[el].get('old_value')
         new_value = compared_data[el].get('new_value')
-        if status == 'nested':
-            nested_str = create_stylish_string(new_value, indent + 1)
-            result_report += f'{indent_str}    {el}: {nested_str}\n'
-        if status == 'removed':
-            if isinstance(old_value, dict):
-                dict_str = create_dict(old_value, indent + 1)
-                result_report += f'{indent_str}  - {el}: {dict_str}\n'
-            else:
-                result_report += \
-                    f'{indent_str}  - {el}: {validate_value(old_value)}\n'
-        if status == 'unchanged':
-            if isinstance(new_value, dict):
-                dict_str = create_dict(new_value, indent + 1)
-                result_report += f'{indent_str}    {el}: {dict_str}\n'
-            else:
-                result_report += \
-                    f'{indent_str}    {el}: {validate_value(new_value)}\n'
-        if status == 'changed':
-            if isinstance(old_value, dict):
-                dict_str = create_dict(old_value, indent + 1)
-                result_report += f'{indent_str}  - {el}: {dict_str}\n'
-            else:
-                result_report += \
-                    f'{indent_str}  - {el}: {validate_value(old_value)}\n'
-            if isinstance(new_value, dict):
-                dict_str = create_dict(new_value, indent + 1)
-                result_report += f'{indent_str}  + {el}: {dict_str}\n'
-            else:
-                result_report += \
-                    f'{indent_str}  + {el}: {validate_value(new_value)}\n'
-        if status == 'added':
-            if isinstance(new_value, dict):
-                dict_str = create_dict(new_value, indent + 1)
-                result_report += f'{indent_str}  + {el}: {dict_str}\n'
-            else:
-                result_report += \
-                    f'{indent_str}  + {el}: {validate_value(new_value)}\n'
+        result_report = stylish_string_conditions(
+            result_report, status, new_value, old_value,
+            indent_str, indent, el
+        )
     return result_report
 
 
