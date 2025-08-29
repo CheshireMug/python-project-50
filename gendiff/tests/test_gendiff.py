@@ -48,7 +48,6 @@ def json_answer():
     return data
 
 
-# Для путей использовать библиотеку pathlib либо os.path.join
 def test_flat_gendiff(flat_answer):
     first_file = os.path.join(
         'gendiff', 'test_data',

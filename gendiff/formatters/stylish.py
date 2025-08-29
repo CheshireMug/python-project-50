@@ -15,10 +15,10 @@ def create_dict(dictionary, indent=0):
     return result_string
 
 
-def create_stylish_string(compared_data, indent=0):
-    indent_str = '    ' * indent
-    result_report = '{\n'
-    for el in sorted(compared_data.keys()):
+def stylish_string_cycle(
+        result_report, sorted_keys, compared_data, indent_str, indent
+        ):
+    for el in sorted_keys:
         status = compared_data[el]['status']
         old_value = compared_data[el].get('old_value')
         new_value = compared_data[el].get('new_value')
@@ -59,5 +59,15 @@ def create_stylish_string(compared_data, indent=0):
             else:
                 result_report += \
                     f'{indent_str}  + {el}: {validate_value(new_value)}\n'
+    return result_report
+
+
+def create_stylish_string(compared_data, indent=0):
+    indent_str = ' ' * 4 * indent
+    result_report = '{\n'
+    sorted_keys = sorted(compared_data.keys())
+    result_report = stylish_string_cycle(
+        result_report, sorted_keys, compared_data, indent_str, indent
+        )
     result_report += f'{indent_str}}}'
     return result_report
