@@ -5,14 +5,21 @@ def create_dict(dictionary, indent=0):
     indent_str = '    ' * indent
     result_string = '{\n'
     for key, value in dictionary.items():
-        if isinstance(value, dict):
-            result_string += \
-                f'{indent_str}    {key}: {create_dict(value, indent + 1)}\n'
-        else:
-            result_string += \
-                f'{indent_str}    {key}: {validate_value(value)}\n'
+        formatted_value = (
+            create_dict(value, indent + 1)
+            if isinstance(value, dict)
+            else validate_value(value)
+        )
+        result_string += f'{indent_str}    {key}: {formatted_value}\n'
     result_string += f'{indent_str}}}'
     return result_string
+
+
+def format_line(indent_str, sign, key, value, indent):
+    if isinstance(value, dict):
+        dict_str = create_dict(value, indent + 1)
+        return f'{indent_str}  {sign} {key}: {dict_str}\n'
+    return f'{indent_str}  {sign} {key}: {validate_value(value)}\n'
 
 
 def stylish_string_conditions(
@@ -21,41 +28,25 @@ def stylish_string_conditions(
           ):
     if status == 'nested':
         nested_str = create_stylish_string(new_value, indent + 1)
-        result_report += f'{indent_str}    {el}: {nested_str}\n'
+        return result_report + f'{indent_str}    {el}: {nested_str}\n'
+
     if status == 'removed':
-        if isinstance(old_value, dict):
-            dict_str = create_dict(old_value, indent + 1)
-            result_report += f'{indent_str}  - {el}: {dict_str}\n'
-        else:
-            result_report += \
-                f'{indent_str}  - {el}: {validate_value(old_value)}\n'
+        return result_report \
+            + format_line(indent_str, '-', el, old_value, indent)
+
     if status == 'unchanged':
-        if isinstance(new_value, dict):
-            dict_str = create_dict(new_value, indent + 1)
-            result_report += f'{indent_str}    {el}: {dict_str}\n'
-        else:
-            result_report += \
-                f'{indent_str}    {el}: {validate_value(new_value)}\n'
+        return result_report \
+            + format_line(indent_str, ' ', el, new_value, indent)
+
     if status == 'changed':
-        if isinstance(old_value, dict):
-            dict_str = create_dict(old_value, indent + 1)
-            result_report += f'{indent_str}  - {el}: {dict_str}\n'
-        else:
-            result_report += \
-                f'{indent_str}  - {el}: {validate_value(old_value)}\n'
-        if isinstance(new_value, dict):
-            dict_str = create_dict(new_value, indent + 1)
-            result_report += f'{indent_str}  + {el}: {dict_str}\n'
-        else:
-            result_report += \
-                f'{indent_str}  + {el}: {validate_value(new_value)}\n'
+        result_report += format_line(indent_str, '-', el, old_value, indent)
+        result_report += format_line(indent_str, '+', el, new_value, indent)
+        return result_report
+
     if status == 'added':
-        if isinstance(new_value, dict):
-            dict_str = create_dict(new_value, indent + 1)
-            result_report += f'{indent_str}  + {el}: {dict_str}\n'
-        else:
-            result_report += \
-                f'{indent_str}  + {el}: {validate_value(new_value)}\n'
+        return result_report + \
+            format_line(indent_str, '+', el, new_value, indent)
+
     return result_report
 
 
