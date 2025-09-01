@@ -1,4 +1,4 @@
-from gendiff.formatters.validation import validate_value
+from gendiff.scripts.validation import validate_value
 
 
 def analyze_plain_dict(dictionary, key_el):
